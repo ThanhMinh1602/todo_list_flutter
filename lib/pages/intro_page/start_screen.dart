@@ -6,6 +6,7 @@ import 'package:todo_list_flutter/components/app_outline_button_custom.dart';
 import 'package:todo_list_flutter/components/icon_button_custom.dart';
 import 'package:todo_list_flutter/gen/assets.gen.dart';
 import 'package:todo_list_flutter/pages/signin_sinup/signin_page.dart';
+import 'package:todo_list_flutter/pages/signin_sinup/sigup_page.dart';
 import 'package:todo_list_flutter/resources/app_color.dart';
 import 'package:todo_list_flutter/resources/app_style.dart';
 import 'package:todo_list_flutter/resources/helper.dart';
@@ -57,18 +58,36 @@ class _StartScreenState extends State<StartScreen> {
               textAlign: TextAlign.center,
             ),
             const Spacer(),
-            AppElevatedButtonCustom(
-                onpressed: () {
-                  Navigator.of(context).push(
-                    PageTransition(
-                      child: const SignInPage(),
-                      type: PageTransitionType.bottomToTop,
-                    ),
-                  );
-                },
-                label: 'LOGIN'),
+            Hero(
+              tag: 'LoginTag',
+              child: AppElevatedButtonCustom(
+                  onpressed: () {
+                    Navigator.of(context).push(
+                      PageTransition(
+                          child: const SignInPage(),
+                          type: PageTransitionType.scale,
+                          // childCurrent: widget,
+                          alignment: Alignment.center,
+                          duration: const Duration(milliseconds: 700)),
+                    );
+                  },
+                  label: 'LOGIN'),
+            ),
             SizedBox(height: Helper.caculatorHeight(context, 28.0)),
-            AppOutlineButtonCustom(onpressed: () {}, label: 'CREATE ACCOUNT'),
+            Hero(
+                 tag: 'RigisterTag',
+              child: AppOutlineButtonCustom(
+                  onpressed: () {
+                    Navigator.of(context).push(
+                      PageTransition(
+                          child: const SignupPage(),
+                          type: PageTransitionType.scale,
+                          alignment: Alignment.center,
+                          duration: const Duration(milliseconds: 700)),
+                    );
+                  },
+                  label: 'CREATE ACCOUNT'),
+            ),
           ],
         ),
       ),

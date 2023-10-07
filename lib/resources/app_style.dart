@@ -20,4 +20,7 @@ class AppStyle {
       color: AppColor.HFFFFFF.withOpacity(0.87));
   static TextStyle H535353_16_400 = const TextStyle(
       fontSize: 16, fontWeight: FontWeight.w400, color: AppColor.H535353);
+  static TextStyle H979797_12_400 = const TextStyle(
+      fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.H979797);
+      
 }

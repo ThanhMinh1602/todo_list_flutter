@@ -34,7 +34,7 @@ class AppElevatedButtonCustom extends StatelessWidget {
       child: Container(
         alignment:alignment,
         padding: const EdgeInsets.symmetric(
-          horizontal: 24.00,
+          horizontal: 24.0,
           vertical: 12.0,
         ),
         decoration: BoxDecoration(

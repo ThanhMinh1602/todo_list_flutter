@@ -64,6 +64,9 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/backgroundnolisst.svg
+  String get backgroundnolisst => 'assets/images/backgroundnolisst.svg';
+
   /// File path: assets/images/logo_welcome.svg
   String get logoWelcome => 'assets/images/logo_welcome.svg';
 
@@ -77,7 +80,8 @@ class $AssetsImagesGen {
   String get splash3 => 'assets/images/splash_3.svg';
 
   /// List of all assets
-  List<String> get values => [logoWelcome, splash1, splash2, splash3];
+  List<String> get values =>
+      [backgroundnolisst, logoWelcome, splash1, splash2, splash3];
 }
 
 class Assets {

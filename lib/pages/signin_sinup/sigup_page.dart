@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list_flutter/components/app_elevates_button_custom.dart';
@@ -7,21 +10,33 @@ import 'package:todo_list_flutter/components/pass_text_form_field_custom.dart';
 import 'package:todo_list_flutter/components/text_form_field_custom.dart';
 import 'package:todo_list_flutter/gen/assets.gen.dart';
 import 'package:todo_list_flutter/pages/home_page/home_page.dart';
-import 'package:todo_list_flutter/pages/signin_sinup/sigup_page.dart';
+import 'package:todo_list_flutter/pages/signin_sinup/signin_page.dart';
 import 'package:todo_list_flutter/resources/app_color.dart';
 import 'package:todo_list_flutter/resources/app_style.dart';
 import 'package:todo_list_flutter/resources/helper.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignupPage> createState() => _SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignInPageState extends State<SignupPage> {
+  // final FarebaseAuthServices _auth = FarebaseAuthServices();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
+  final TextEditingController _confirmpassController = TextEditingController();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailController.dispose();
+    _passController.dispose();
+    _confirmpassController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,13 +58,13 @@ class _SignInPageState extends State<SignInPage> {
                 icon: Assets.icons.backIc,
               ),
             ),
-            SizedBox(height: Helper.caculatorHeight(context, 41.0)),
+            SizedBox(height: Helper.caculatorHeight(context, 16.0)),
             Text(
-              'Login',
+              'Register',
               style: AppStyle.w87_32_700
                   .copyWith(color: AppColor.HFFFFFF.withOpacity(0.87)),
             ),
-            SizedBox(height: Helper.caculatorHeight(context, 53.0)),
+            SizedBox(height: Helper.caculatorHeight(context, 23.0)),
             Text('Email', style: AppStyle.w87_16_400),
             SizedBox(height: Helper.caculatorHeight(context, 8.0)),
             TextFormFieldCustom(
@@ -63,26 +78,32 @@ class _SignInPageState extends State<SignInPage> {
               hintText: 'Enter your pasword',
               controller: _passController,
             ),
-            SizedBox(height: Helper.caculatorHeight(context, 69.0)),
+            SizedBox(height: Helper.caculatorHeight(context, 25.0)),
+            Text('Confirm Password', style: AppStyle.w87_16_400),
+            SizedBox(height: Helper.caculatorHeight(context, 8.0)),
+            PasswordTextFormFieldCustom(
+              hintText: 'Confirm password',
+              controller: _confirmpassController,
+            ),
+            SizedBox(height: Helper.caculatorHeight(context, 40.0)),
             Hero(
-              tag: 'LoginTag',
+              tag: 'RigisterTag',
               child: AppElevatedButtonCustom(
-                  label: 'Login',
-                  onpressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ));
-                  },
+                  label: 'Register',
+                  onpressed: (){},
                   backgroundColor: AppColor.primaryColor.withOpacity(
-                      _emailController.text.isEmpty && _passController.text.isEmpty
+                      _emailController.text.isEmpty &&
+                              _passController.text.isEmpty &&
+                              _confirmpassController.text.isEmpty
                           ? 0.5
                           : 1),
                   foreground: AppColor.HFFFFFF.withOpacity(
-                      _emailController.text.isEmpty && _passController.text.isEmpty
+                      _emailController.text.isEmpty &&
+                              _passController.text.isEmpty
                           ? 0.5
                           : 1)),
             ),
-            SizedBox(height: Helper.caculatorHeight(context, 45.0)),
+            SizedBox(height: Helper.caculatorHeight(context, 32.0)),
             Row(
               children: [
                 const Expanded(
@@ -105,13 +126,13 @@ class _SignInPageState extends State<SignInPage> {
                 )
               ],
             ),
-            SizedBox(height: Helper.caculatorHeight(context, 39.0)),
+            SizedBox(height: Helper.caculatorHeight(context, 34.0)),
             AppOutlineRowButtonCustom(
               label: 'Login with Google',
               icon: Assets.icons.googleIc,
               onpressed: () {},
             ),
-            SizedBox(height: Helper.caculatorHeight(context, 20.0)),
+            SizedBox(height: Helper.caculatorHeight(context, 17.0)),
             AppOutlineRowButtonCustom(
               label: 'Login with Google',
               icon: Assets.icons.appleIc,
@@ -124,15 +145,18 @@ class _SignInPageState extends State<SignInPage> {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                        text: 'Don’t have an account?',
+                        text: 'Already have an account?',
                         style: AppStyle.H979797_12_400),
                     TextSpan(
-                        text: ' Register',
+                        text: ' Login',
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () =>
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const SignupPage(),
-                              )),
+                          ..onTap = () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const SignInPage(),
+                              ),
+                            );
+                          },
                         style: AppStyle.w87_16_400.copyWith(fontSize: 12.0)),
                   ],
                 ),
@@ -143,4 +167,20 @@ class _SignInPageState extends State<SignInPage> {
       ),
     );
   }
+
+  // void _signUp() async {
+  //   String email = _emailController.text;
+  //   String confirmPass = _confirmpassController.text;
+  //   User? user = await _auth.signUpWithEmailAndPassword(email, confirmPass);
+  //   if (user != null) {
+  //     print('thêm thành công');
+  //     Navigator.of(context).push(
+  //       MaterialPageRoute(
+  //         builder: (context) => const HomePage(),
+  //       ),
+  //     );
+  //   }else{
+  //     print('lỗi');
+  //   }
+  // }
 }
