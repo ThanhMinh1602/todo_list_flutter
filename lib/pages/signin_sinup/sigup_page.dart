@@ -171,8 +171,8 @@ class _SignInPageState extends State<SignupPage> {
   }
 
   void _signUp() async {
-    String email = _emailController.text;
-    String confirmPass = _confirmpassController.text;
+    String email = _emailController.text.trim();
+    String confirmPass = _confirmpassController.text.trim();
     User? user = await _auth.signUpWithEmailAndPassword(email, confirmPass);
     if (user != null) {
       print('thêm thành công');

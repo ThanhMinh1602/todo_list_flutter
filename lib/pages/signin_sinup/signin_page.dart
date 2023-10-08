@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list_flutter/components/app_elevates_button_custom.dart';
@@ -5,6 +6,7 @@ import 'package:todo_list_flutter/components/app_ouline_row_custom_button.dart';
 import 'package:todo_list_flutter/components/icon_button_custom.dart';
 import 'package:todo_list_flutter/components/pass_text_form_field_custom.dart';
 import 'package:todo_list_flutter/components/text_form_field_custom.dart';
+import 'package:todo_list_flutter/firebase/firebase_auth_services.dart';
 import 'package:todo_list_flutter/gen/assets.gen.dart';
 import 'package:todo_list_flutter/pages/home_page/home_page.dart';
 import 'package:todo_list_flutter/pages/signin_sinup/sigup_page.dart';
@@ -22,6 +24,7 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
+  final FarebaseAuthServices _auth = FarebaseAuthServices();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,17 +71,15 @@ class _SignInPageState extends State<SignInPage> {
               tag: 'LoginTag',
               child: AppElevatedButtonCustom(
                   label: 'Login',
-                  onpressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ));
-                  },
+                  onpressed: _signIn,
                   backgroundColor: AppColor.primaryColor.withOpacity(
-                      _emailController.text.isEmpty && _passController.text.isEmpty
+                      _emailController.text.isEmpty &&
+                              _passController.text.isEmpty
                           ? 0.5
                           : 1),
                   foreground: AppColor.HFFFFFF.withOpacity(
-                      _emailController.text.isEmpty && _passController.text.isEmpty
+                      _emailController.text.isEmpty &&
+                              _passController.text.isEmpty
                           ? 0.5
                           : 1)),
             ),
@@ -142,5 +143,21 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
+  }
+
+  void _signIn() async {
+    String email = _emailController.text.trim();
+    String password = _passController.text.trim();
+    User? user = await _auth.signInWithEmailAndPassword(email, password);
+    if (user != null) {
+      print('Đăng nhập thành công');
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    } else {
+      print('sai tên đăng nhâpj hoặc mk');
+    }
   }
 }
