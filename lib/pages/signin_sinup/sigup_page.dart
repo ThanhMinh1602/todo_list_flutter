@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_list_flutter/components/app_elevates_button_custom.dart';
@@ -8,6 +9,7 @@ import 'package:todo_list_flutter/components/app_ouline_row_custom_button.dart';
 import 'package:todo_list_flutter/components/icon_button_custom.dart';
 import 'package:todo_list_flutter/components/pass_text_form_field_custom.dart';
 import 'package:todo_list_flutter/components/text_form_field_custom.dart';
+import 'package:todo_list_flutter/firebase/firebase_auth_services.dart';
 import 'package:todo_list_flutter/gen/assets.gen.dart';
 import 'package:todo_list_flutter/pages/home_page/home_page.dart';
 import 'package:todo_list_flutter/pages/signin_sinup/signin_page.dart';
@@ -23,7 +25,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignupPage> {
-  // final FarebaseAuthServices _auth = FarebaseAuthServices();
+  final FarebaseAuthServices _auth = FarebaseAuthServices();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _confirmpassController = TextEditingController();
@@ -90,7 +92,7 @@ class _SignInPageState extends State<SignupPage> {
               tag: 'RigisterTag',
               child: AppElevatedButtonCustom(
                   label: 'Register',
-                  onpressed: (){},
+                  onpressed:_signUp,
                   backgroundColor: AppColor.primaryColor.withOpacity(
                       _emailController.text.isEmpty &&
                               _passController.text.isEmpty &&
@@ -168,19 +170,19 @@ class _SignInPageState extends State<SignupPage> {
     );
   }
 
-  // void _signUp() async {
-  //   String email = _emailController.text;
-  //   String confirmPass = _confirmpassController.text;
-  //   User? user = await _auth.signUpWithEmailAndPassword(email, confirmPass);
-  //   if (user != null) {
-  //     print('thêm thành công');
-  //     Navigator.of(context).push(
-  //       MaterialPageRoute(
-  //         builder: (context) => const HomePage(),
-  //       ),
-  //     );
-  //   }else{
-  //     print('lỗi');
-  //   }
-  // }
+  void _signUp() async {
+    String email = _emailController.text;
+    String confirmPass = _confirmpassController.text;
+    User? user = await _auth.signUpWithEmailAndPassword(email, confirmPass);
+    if (user != null) {
+      print('thêm thành công');
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    }else{
+      print('lỗi');
+    }
+  }
 }
