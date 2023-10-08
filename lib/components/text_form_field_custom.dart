@@ -11,23 +11,32 @@ class TextFormFieldCustom extends StatelessWidget {
     required this.hintText,
     this.keyboardType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
-     this.controller,
+    this.controller, this.validator, this.errorText,
   }) : super(key: key);
   final String hintText;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final TextEditingController? controller;
+  final String? errorText;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller:controller ,
+      controller: controller,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       style: AppStyle.w_16_400,
+      validator: validator,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: AppStyle.H535353_16_400,
         contentPadding: const EdgeInsets.all(12.0),
+        errorText:errorText ,
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(4.0),
+          borderSide: const BorderSide(
+              color: Color.fromARGB(255, 255, 0, 0), width: 0.8),
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.0),
           borderSide: const BorderSide(color: AppColor.H979797, width: 0.8),

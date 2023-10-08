@@ -9,20 +9,22 @@ class PasswordTextFormFieldCustom extends StatelessWidget {
   const PasswordTextFormFieldCustom({
     Key? key,
     required this.hintText,
-     this.controller,
+    this.controller,
+    this.errorText,
   }) : super(key: key);
   final String hintText;
   final TextEditingController? controller;
+  final String? errorText;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: true,
-      controller:controller ,
-      keyboardType:TextInputType.visiblePassword ,
+      controller: controller,
+      keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.done,
-      
       style: AppStyle.w_16_400,
       decoration: InputDecoration(
+        errorText: errorText,
         hintText: hintText,
         hintStyle: AppStyle.H535353_16_400,
         contentPadding: const EdgeInsets.all(12.0),

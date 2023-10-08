@@ -8,7 +8,6 @@ import 'package:todo_list_flutter/components/pass_text_form_field_custom.dart';
 import 'package:todo_list_flutter/components/text_form_field_custom.dart';
 import 'package:todo_list_flutter/firebase/firebase_auth_services.dart';
 import 'package:todo_list_flutter/gen/assets.gen.dart';
-import 'package:todo_list_flutter/pages/home_page/home_page.dart';
 import 'package:todo_list_flutter/pages/signin_sinup/sigup_page.dart';
 import 'package:todo_list_flutter/resources/app_color.dart';
 import 'package:todo_list_flutter/resources/app_style.dart';
@@ -25,6 +24,18 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   final FarebaseAuthServices _auth = FarebaseAuthServices();
+  String? _showEmailErr;
+  String? _showPassErr;
+  bool _userInvalid = false;
+  bool _passInvalid = false;
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _emailController.dispose();
+    _passController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +69,10 @@ class _SignInPageState extends State<SignInPage> {
             TextFormFieldCustom(
               hintText: 'Enter your email',
               controller: _emailController,
+              errorText: _showEmailErr,
+              validator: (p0) {
+                _showEmailErr = p0;
+              },
             ),
             SizedBox(height: Helper.caculatorHeight(context, 25.0)),
             Text('Password', style: AppStyle.w87_16_400),
@@ -65,6 +80,8 @@ class _SignInPageState extends State<SignInPage> {
             PasswordTextFormFieldCustom(
               hintText: 'Enter your pasword',
               controller: _passController,
+              // ignore: unnecessary_null_comparison
+              errorText: _passController == null ? _showPassErr : null,
             ),
             SizedBox(height: Helper.caculatorHeight(context, 69.0)),
             Hero(
@@ -148,16 +165,37 @@ class _SignInPageState extends State<SignInPage> {
   void _signIn() async {
     String email = _emailController.text.trim();
     String password = _passController.text.trim();
-    User? user = await _auth.signInWithEmailAndPassword(email, password);
-    if (user != null) {
-      print('Đăng nhập thành công');
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ),
-      );
-    } else {
-      print('sai tên đăng nhâpj hoặc mk');
-    }
+    setState(() {
+      if (email.isEmpty) {
+        _showEmailErr = 'Vui lòng không bỏ trống';
+      } else if (!email.contains("@")) {
+        _showEmailErr = 'Vui lòng nhập đúng định dạng';
+      } else if (email.isNotEmpty) {
+        _showEmailErr = null;
+      }
+      if (password.isEmpty) {
+        _showPassErr = 'Vui lòng không bỏ trống';
+      }
+    });
+
+    //   User? user = await _auth.signInWithEmailAndPassword(email, password);
+    //   if (user != null) {
+    //     Navigator.of(context).push(
+    //       MaterialPageRoute(
+    //         builder: (context) => const HomePage(),
+    //       ),
+    //     );
+    //   } else {
+    //     // ignore: use_build_context_synchronously
+    //     showDialog(
+    //       context: context,
+    //       builder: (context) {
+    //         return const AlertDialog(
+    //           content: Text('Sai tên đăng nhập hoặc mật khẩu'),
+    //         );
+    //       },
+    //     );
+    //   }
+    // }
   }
 }
