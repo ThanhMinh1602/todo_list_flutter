@@ -21,25 +21,31 @@ class _IntroPageState extends State<IntroPage> {
       Navigator.of(context).pushAndRemoveUntil(
           PageTransition(
               child: OnboadingPage(),
-              type: PageTransitionType.rightToLeft,duration: const Duration(milliseconds: 400)),
+              type: PageTransitionType.rightToLeft,
+              duration: const Duration(milliseconds: 400)),
           (route) => false);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(Assets.images.logoWelcome,
-                width: MediaQuery.of(context).size.width * 113 / 375),
-             Text(
-              'UpTodo',
-              style: AppStyle.w_40_700,
-            )
-          ],
+      body: Padding(
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(Assets.images.logoWelcome,
+                  width: MediaQuery.of(context).size.width * 113 / 375),
+              Text(
+                'UpTodo',
+                style: AppStyle.w_40_700,
+              )
+            ],
+          ),
         ),
       ),
     );

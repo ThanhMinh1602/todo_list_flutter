@@ -30,6 +30,7 @@ class _SignInPageState extends State<SignupPage> {
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _confirmpassController = TextEditingController();
 
+   String? _showEmailErr;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -72,6 +73,16 @@ class _SignInPageState extends State<SignupPage> {
             TextFormFieldCustom(
               hintText: 'Enter your email',
               controller: _emailController,
+              errorText: _showEmailErr,
+              onChanged: (p0) {
+                setState(() {
+                  setState(() {
+                    _showEmailErr = !p0.contains('@')
+                        ? 'Please enter the correct format'
+                        : null;
+                  });
+                });
+              },
             ),
             SizedBox(height: Helper.caculatorHeight(context, 25.0)),
             Text('Password', style: AppStyle.w87_16_400),
@@ -92,7 +103,7 @@ class _SignInPageState extends State<SignupPage> {
               tag: 'RigisterTag',
               child: AppElevatedButtonCustom(
                   label: 'Register',
-                  onpressed:_signUp,
+                  onpressed: _signUp,
                   backgroundColor: AppColor.primaryColor.withOpacity(
                       _emailController.text.isEmpty &&
                               _passController.text.isEmpty &&
@@ -182,7 +193,7 @@ class _SignInPageState extends State<SignupPage> {
           builder: (context) => const HomePage(),
         ),
       );
-    }else{
+    } else {
       print('lỗi');
     }
   }

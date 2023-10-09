@@ -6,15 +6,20 @@ import 'package:todo_list_flutter/resources/app_color.dart';
 import 'package:todo_list_flutter/resources/app_style.dart';
 
 class PasswordTextFormFieldCustom extends StatelessWidget {
+
   const PasswordTextFormFieldCustom({
     Key? key,
     required this.hintText,
     this.controller,
     this.errorText,
+    this.onChanged,
   }) : super(key: key);
+
   final String hintText;
   final TextEditingController? controller;
   final String? errorText;
+  final Function(String)? onChanged;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -22,6 +27,7 @@ class PasswordTextFormFieldCustom extends StatelessWidget {
       controller: controller,
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.done,
+      onChanged: onChanged,
       style: AppStyle.w_16_400,
       decoration: InputDecoration(
         errorText: errorText,
