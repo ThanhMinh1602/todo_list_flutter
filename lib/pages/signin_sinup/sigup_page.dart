@@ -4,6 +4,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_list_flutter/components/app_dialog.dart';
 import 'package:todo_list_flutter/components/app_elevates_button_custom.dart';
 import 'package:todo_list_flutter/components/app_ouline_row_custom_button.dart';
 import 'package:todo_list_flutter/components/icon_button_custom.dart';
@@ -30,7 +31,9 @@ class _SignInPageState extends State<SignupPage> {
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _confirmpassController = TextEditingController();
 
-   String? _showEmailErr;
+  String? _showEmailErr;
+  String? _showPassErr;
+  String? _showConfirmPassErr;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -74,15 +77,7 @@ class _SignInPageState extends State<SignupPage> {
               hintText: 'Enter your email',
               controller: _emailController,
               errorText: _showEmailErr,
-              onChanged: (p0) {
-                setState(() {
-                  setState(() {
-                    _showEmailErr = !p0.contains('@')
-                        ? 'Please enter the correct format'
-                        : null;
-                  });
-                });
-              },
+              onChanged: checkEmail,
             ),
             SizedBox(height: Helper.caculatorHeight(context, 25.0)),
             Text('Password', style: AppStyle.w87_16_400),
@@ -90,6 +85,8 @@ class _SignInPageState extends State<SignupPage> {
             PasswordTextFormFieldCustom(
               hintText: 'Enter your pasword',
               controller: _passController,
+              errorText: _showPassErr,
+              onChanged: checkPass,
             ),
             SizedBox(height: Helper.caculatorHeight(context, 25.0)),
             Text('Confirm Password', style: AppStyle.w87_16_400),
@@ -97,6 +94,8 @@ class _SignInPageState extends State<SignupPage> {
             PasswordTextFormFieldCustom(
               hintText: 'Confirm password',
               controller: _confirmpassController,
+              errorText: _showConfirmPassErr,
+              onChanged: checkConfirmPass,
             ),
             SizedBox(height: Helper.caculatorHeight(context, 40.0)),
             Hero(
@@ -181,9 +180,47 @@ class _SignInPageState extends State<SignupPage> {
     );
   }
 
+  checkConfirmPass(p0) {
+    if (p0 != _passController.text.toString().trim()) {
+      setState(() {
+        _showConfirmPassErr = 'Confirm password is incorrect';
+      });
+    } else {
+      setState(() {
+        _showConfirmPassErr = null;
+      });
+    }
+  }
+
+  checkPass(p0) {
+    if (p0.length < 8 ||
+        !p0.contains(RegExp(r'[a-z]')) ||
+        !p0.contains(RegExp(r'[!@#\$%^&*()]'))) {
+      setState(() {
+        _showPassErr =
+            'Password must have more than 8 characters, including\nspecial characters, letters and numbers';
+      });
+    } else {
+      setState(() {
+        _showPassErr = null;
+      });
+    }
+  }
+
+  checkEmail(p0) {
+    if (p0.contains('@') || p0.isEmpty || p0 == '') {
+      setState(() {
+        _showEmailErr = null;
+      });
+    } else {
+      setState(() {
+        _showEmailErr = 'Email is not in the correct format';
+      });
+    }
+  }
+
   void _signUp() async {
     String email = _emailController.text.trim();
-    String passWord = _passController.text.trim();
     String confirmPass = _confirmpassController.text.trim();
     User? user = await _auth.signUpWithEmailAndPassword(email, confirmPass);
     if (user != null) {
@@ -194,7 +231,8 @@ class _SignInPageState extends State<SignupPage> {
         ),
       );
     } else {
-      print('lỗi');
+      AppDialog.loginDialog(context,
+          title: 'Wrong signin information', content: 'Email is exits');
     }
   }
 }

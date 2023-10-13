@@ -33,8 +33,32 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home_ic.svg
   String get homeIc => 'assets/icons/home_ic.svg';
 
+  /// File path: assets/icons/ic_calendar.svg
+  String get icCalendar => 'assets/icons/ic_calendar.svg';
+
+  /// File path: assets/icons/ic_calendar_active.svg
+  String get icCalendarActive => 'assets/icons/ic_calendar_active.svg';
+
+  /// File path: assets/icons/ic_focus_active.svg
+  String get icFocusActive => 'assets/icons/ic_focus_active.svg';
+
+  /// File path: assets/icons/ic_focuse.svg
+  String get icFocuse => 'assets/icons/ic_focuse.svg';
+
+  /// File path: assets/icons/ic_home.svg
+  String get icHome => 'assets/icons/ic_home.svg';
+
+  /// File path: assets/icons/ic_home_active.svg
+  String get icHomeActive => 'assets/icons/ic_home_active.svg';
+
+  /// File path: assets/icons/ic_profile.svg
+  String get icProfile => 'assets/icons/ic_profile.svg';
+
   /// File path: assets/icons/index_home_active.svg
   String get indexHomeActive => 'assets/icons/index_home_active.svg';
+
+  /// File path: assets/icons/menu_appbar_ic.svg
+  String get menuAppbarIc => 'assets/icons/menu_appbar_ic.svg';
 
   /// File path: assets/icons/profile_ic.svg
   String get profileIc => 'assets/icons/profile_ic.svg';
@@ -54,7 +78,15 @@ class $AssetsIconsGen {
         focuseIc,
         googleIc,
         homeIc,
+        icCalendar,
+        icCalendarActive,
+        icFocusActive,
+        icFocuse,
+        icHome,
+        icHomeActive,
+        icProfile,
         indexHomeActive,
+        menuAppbarIc,
         profileIc,
         universityIc,
         workIc
@@ -66,6 +98,9 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/backgroundnolisst.svg
   String get backgroundnolisst => 'assets/images/backgroundnolisst.svg';
+
+  /// File path: assets/images/list_null.svg
+  String get listNull => 'assets/images/list_null.svg';
 
   /// File path: assets/images/logo_welcome.svg
   String get logoWelcome => 'assets/images/logo_welcome.svg';
@@ -81,7 +116,7 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<String> get values =>
-      [backgroundnolisst, logoWelcome, splash1, splash2, splash3];
+      [backgroundnolisst, listNull, logoWelcome, splash1, splash2, splash3];
 }
 
 class Assets {

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_list_flutter/components/app_dialog.dart';
 import 'package:todo_list_flutter/components/app_elevates_button_custom.dart';
 import 'package:todo_list_flutter/components/app_ouline_row_custom_button.dart';
 import 'package:todo_list_flutter/components/icon_button_custom.dart';
@@ -28,6 +29,7 @@ class _SignInPageState extends State<SignInPage> {
   String? _showEmailErr;
   String? _showPassErr;
   String? loginErr;
+  bool _checkLogin = false;
   @override
   void dispose() {
     // TODO: implement dispose
@@ -72,18 +74,7 @@ class _SignInPageState extends State<SignInPage> {
                 hintText: 'Enter your email',
                 controller: _emailController,
                 errorText: _showEmailErr,
-                onChanged: (p0) {
-                  setState(() {
-                    setState(() {
-                      _showEmailErr = !p0.contains('@')
-                          ? 'Please enter the correct format'
-                          : null;
-                    });
-                  });
-                },
-                // validator: (p0) {
-                //   _showEmailErr = p0;
-                // },
+                onChanged: checkEmail,
               ),
               SizedBox(height: Helper.caculatorHeight(context, 25.0)),
               Text('Password', style: AppStyle.w87_16_400),
@@ -91,11 +82,9 @@ class _SignInPageState extends State<SignInPage> {
               PasswordTextFormFieldCustom(
                 hintText: 'Enter your pasword',
                 controller: _passController,
-                // ignore: unnecessary_null_comparison
-                errorText: _showPassErr,
                 onChanged: (p0) {
                   setState(() {
-                    _showPassErr = null;
+                    p0.isNotEmpty ? _checkLogin = true : _checkLogin = false;
                   });
                 },
               ),
@@ -104,15 +93,11 @@ class _SignInPageState extends State<SignInPage> {
                 tag: 'LoginTag',
                 child: AppElevatedButtonCustom(
                     label: 'Login',
-                    onpressed: _signIn,
-                    backgroundColor: AppColor.primaryColor.withOpacity(
-                        _emailController.text.isEmpty &&
-                                _passController.text.isEmpty
-                            ? 0.5
-                            : 1),
+                    onpressed: _checkLogin == true ? _signIn : () => null,
+                    backgroundColor: AppColor.primaryColor
+                        .withOpacity(_checkLogin == false ? 0.5 : 1),
                     foreground: AppColor.HFFFFFF.withOpacity(
-                        _emailController.text.isEmpty &&
-                                _passController.text.isEmpty
+                        _checkLogin == false && _checkLogin == false
                             ? 0.5
                             : 1)),
               ),
@@ -179,6 +164,16 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
+  checkEmail(p0) {
+    setState(() {
+      if (p0.contains('@') || p0.isEmpty || p0 == '') {
+        _showEmailErr = null;
+      } else {
+        _showEmailErr = 'Email is not in the correct format';
+      }
+    });
+  }
+
   void _signIn() async {
     String email = _emailController.text.trim();
     String password = _passController.text.trim();
@@ -201,34 +196,9 @@ class _SignInPageState extends State<SignInPage> {
         );
       } else {
         // ignore: use_build_context_synchronously
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Text(
-                'Wrong login information',
-                style: AppStyle.w_16_400,
-              ),
-              backgroundColor: AppColor.backgroundColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0)),
-              content: Text(
-                'Email or password is invalid',
-                style: AppStyle.H979797_12_400.copyWith(fontSize: 14.0),
-              ),
-              actionsPadding: const EdgeInsets.symmetric(horizontal: 6.9)
-                  .copyWith(bottom: 6.9),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(
-                      'OK',
-                      style: AppStyle.w_16_400.copyWith(color: AppColor.blue),
-                    ))
-              ],
-            );
-          },
-        );
+        AppDialog.loginDialog(context,
+            title: 'Wrong login information',
+            content: 'Email or password is invalid');
       }
     }
   }
