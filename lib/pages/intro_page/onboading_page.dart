@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:todo_list_flutter/components/app_elevates_button_custom.dart';
-import 'package:todo_list_flutter/components/page_indicator.dart';
+import 'package:todo_list_flutter/components/buttons/app_elevates_button_custom.dart';
+import 'package:todo_list_flutter/components/pageindicator/page_indicator.dart';
 import 'package:todo_list_flutter/models/intro_model.dart';
 import 'package:todo_list_flutter/pages/intro_page/start_screen.dart';
 import 'package:todo_list_flutter/resources/app_color.dart';

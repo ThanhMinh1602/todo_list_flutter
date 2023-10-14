@@ -21,6 +21,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/calendar_ic.svg
   String get calendarIc => 'assets/icons/calendar_ic.svg';
 
+  /// File path: assets/icons/flag.svg
+  String get flag => 'assets/icons/flag.svg';
+
   /// File path: assets/icons/flag_ic.svg
   String get flagIc => 'assets/icons/flag_ic.svg';
 
@@ -63,6 +66,15 @@ class $AssetsIconsGen {
   /// File path: assets/icons/profile_ic.svg
   String get profileIc => 'assets/icons/profile_ic.svg';
 
+  /// File path: assets/icons/send.svg
+  String get send => 'assets/icons/send.svg';
+
+  /// File path: assets/icons/tag.svg
+  String get tag => 'assets/icons/tag.svg';
+
+  /// File path: assets/icons/timer.svg
+  String get timer => 'assets/icons/timer.svg';
+
   /// File path: assets/icons/university_ic.svg
   String get universityIc => 'assets/icons/university_ic.svg';
 
@@ -74,6 +86,7 @@ class $AssetsIconsGen {
         appleIc,
         backIc,
         calendarIc,
+        flag,
         flagIc,
         focuseIc,
         googleIc,
@@ -88,6 +101,9 @@ class $AssetsIconsGen {
         indexHomeActive,
         menuAppbarIc,
         profileIc,
+        send,
+        tag,
+        timer,
         universityIc,
         workIc
       ];

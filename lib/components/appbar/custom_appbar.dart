@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list_flutter/components/icon_button_custom.dart';
-import 'package:todo_list_flutter/gen/assets.gen.dart';
 import 'package:todo_list_flutter/models/user_model.dart';
 import 'package:todo_list_flutter/resources/app_color.dart';
 import 'package:todo_list_flutter/resources/app_style.dart';

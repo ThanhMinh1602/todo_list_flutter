@@ -16,6 +16,7 @@ class TextFormFieldCustom extends StatelessWidget {
     this.validator,
     this.onChanged,
   }) : super(key: key);
+
   final String hintText;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
@@ -29,14 +30,14 @@ class TextFormFieldCustom extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
-      style: AppStyle.w_16_400,
+      style: AppStyle.w87_16_400,
       validator: validator,
-      onChanged:onChanged ,
+      onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: AppStyle.H535353_16_400,
         contentPadding: const EdgeInsets.all(12.0),
-        errorText:errorText ,
+        errorText: errorText,
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.0),
           borderSide: const BorderSide(

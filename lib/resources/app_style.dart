@@ -29,4 +29,6 @@ class AppStyle {
       fontSize: 16, fontWeight: FontWeight.w400, color: AppColor.H535353);
   static TextStyle H979797_12_400 = const TextStyle(
       fontSize: 12, fontWeight: FontWeight.w400, color: AppColor.H979797);
+        static TextStyle HAFAFAF_18_400 = const TextStyle(
+      fontSize: 18, fontWeight: FontWeight.w400, color: AppColor.HAFAFAF);
 }
